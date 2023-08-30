@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  ca:
+    image: debian:trixie
+    tty: true
+    volumes:
+      - ca:/var/lib/ca
+      - ./init.sh:/init.sh
+      - ./etc/simple-pki:/etc/pki
+    entrypoint: sh -c "sh /init.sh && nginx -g 'daemon off;'"
+    networks:
+      - pki
+
+volumes:
+  ca:
+
+networks:
+  pki: {}
